@@ -11,6 +11,7 @@ from netCDF4 import Dataset
 
 from . import utilities as util
 from . import edgar
+from . import vprm
 from emiproc import append_inventories
 
 
@@ -252,6 +253,7 @@ def main(cfg):
         cfg.shpfile_resolution,
         cfg.nprocs,
     )
+    #country_mask = None
     # Load or compute the mapping between the inventory and COSMO grid
     interpolation = util.get_gridmapping(
         cfg.output_path,
@@ -299,6 +301,9 @@ def main(cfg):
 
         elif cfg.inventory == 'EDGAR':
             edgar.process_edgar(cfg, interpolation, country_mask, out, latname,
+                        lonname)
+        elif cfg.inventory == 'VPRM':
+            vprm.process_vprm(cfg, interpolation, country_mask, out, latname,
                         lonname)
 
 
